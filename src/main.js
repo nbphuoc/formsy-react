@@ -108,6 +108,7 @@ Formsy.Form = createReactClass({
     // If any inputs have not been touched yet this will make them dirty
     // so validation becomes visible (if based on isPristine)
     this.setFormPristine(false);
+    this.setState({baseErrors: null})
     var model = this.getModel();
     this.props.onSubmit(model, this.resetModel, this.updateInputsWithError);
     this.state.isValid ? this.props.onValidSubmit(model, this.resetModel, this.updateInputsWithError) : this.props.onInvalidSubmit(model, this.resetModel, this.updateInputsWithError);
