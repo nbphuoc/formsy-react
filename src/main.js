@@ -181,6 +181,14 @@ Formsy.Form = createReactClass({
   // and set the serverError message
   updateInputsWithError: function (errors) {
     Object.keys(errors).forEach((name, index) => {
+
+      if (name === 'base') {
+        this.setState({
+          baseErrors: typeof errors[name] === 'Array' ? errors['base'] : [errors['base']]
+        });
+        return
+      }
+
       var component = utils.find(this.inputs, component => component.props.name === name);
       if (!component) {
         throw new Error('You are trying to update an input that does not exist. ' +
@@ -424,6 +432,25 @@ Formsy.Form = createReactClass({
 
     this.validateForm();
   },
+
+  renderBaseErrors: function() {
+    if (this.state.baseErrors) {
+      return (
+        <div className="alert alert-danger">
+          <ul>
+            {
+              this.state.baseErrors.map((error, index) => {
+                return(<li key={index}>{error}</li>);
+              })
+            }
+          </ul>
+        </div>
+      )
+    } else {
+      return null
+    }
+  },
+
   render: function () {
     var {
       mapping,
@@ -443,6 +470,7 @@ Formsy.Form = createReactClass({
 
     return (
       <form {...nonFormsyProps} onSubmit={this.submit}>
+        {this.renderBaseErrors()}
         {this.props.children}
       </form>
     );
