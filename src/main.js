@@ -437,8 +437,6 @@ Formsy.Form = createReactClass({
   renderBaseErrors: function() {
     if (this.state.baseErrors) {
       let baseErrorsItem;
-      console.log(this.state.baseErrors)
-      console.log(this.state.baseErrors.length)
       if (this.state.baseErrors.length < 2) {
         baseErrorsItem = this.state.baseErrors[0]
       } else  {
