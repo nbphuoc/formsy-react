@@ -185,7 +185,7 @@ Formsy.Form = createReactClass({
 
       if (name === 'base') {
         this.setState({
-          baseErrors: typeof errors[name] === 'Array' ? errors['base'] : [errors['base']]
+          baseErrors: errors['base'] instanceof Array ? errors['base'] : [errors['base']]
         });
         return
       }
@@ -436,15 +436,25 @@ Formsy.Form = createReactClass({
 
   renderBaseErrors: function() {
     if (this.state.baseErrors) {
+      let baseErrorsItem;
+      console.log(this.state.baseErrors)
+      console.log(this.state.baseErrors.length)
+      if (this.state.baseErrors.length < 2) {
+        baseErrorsItem = this.state.baseErrors[0]
+      } else  {
+        baseErrorsItem = (
+        <ul>
+          {
+            this.state.baseErrors.map((error, index) => {
+              return(<li key={index}>{error}</li>);
+            })
+          }
+        </ul>)
+      }
+
       return (
         <div className="alert alert-danger">
-          <ul>
-            {
-              this.state.baseErrors.map((error, index) => {
-                return(<li key={index}>{error}</li>);
-              })
-            }
-          </ul>
+          {baseErrorsItem}
         </div>
       )
     } else {
